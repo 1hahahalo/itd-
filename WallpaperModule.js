@@ -20,42 +20,46 @@
                     background-position: center !important;
                 }
                 
-                /* Убираем заливку со всех фоновых слоев, чтобы видеть обои */
-                #app, .layout, main, .main-container, .profile-posts, main > div {
+                #app, .layout, main, .main-container, .profile-posts, .feed-content {
                     background: transparent !important;
                 }
 
-                /* Стеклянный эффект для основных контейнеров */
-                .feed-card, 
+                .create-post,
+                .wall-post-form,
                 .post-container, 
-                .wall-post-form, 
                 .sidebar,
+                .sidebar-pill,
+                .sidebar-menu,
+                .feed-card,
                 .profile-card,
                 .suggestions,
                 .top-clans,
-                .sidebar-menu,
-                .post-dropdown {
+                .post-dropdown,
+                main > div:first-child {
                     background-color: rgba(0, 0, 0, 0.6) !important;
                     backdrop-filter: blur(12px) !important;
-                    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+                    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+                    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4) !important;
                 }
 
-                /* Исправление для постов в профиле и ленте */
-                .post-container {
-                    margin-bottom: 12px !important;
+                .create-post, .wall-post-form, .post-container {
                     border-radius: 16px !important;
+                    margin-bottom: 16px !important;
                 }
 
-                /* Исправление для боковой панели */
-                .sidebar {
-                    border-radius: 20px !important;
+                .sidebar-pill {
+                    border-radius: 9999px !important;
+                    padding: 8px !important;
+                    margin-bottom: 12px !important;
                 }
 
-                /* Делаем вкладки и шапки прозрачными */
-                .feed-tabs, .profile-tabs, .profile-info, .top-clans__header {
+                .feed-tabs, .profile-tabs, .top-clans__header {
                     background: transparent !important;
                     border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+                }
+
+                .sidebar-nav-item.active {
+                    background: rgba(255, 255, 255, 0.1) !important;
                 }
             `;
         };
