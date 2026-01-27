@@ -22,20 +22,6 @@
                 .layout.svelte-13vg9xt, .main-container.svelte-13vg9xt {
                     background: transparent !important;
                 }
-                .feed-card.svelte-1ooj66h, 
-                .profile-card.svelte-14luta1,
-                .post-container.svelte-cvb24n,
-                .wall-post-form.svelte-vw1v4s,
-                .suggestions.svelte-1u9eu0j,
-                .top-clans.svelte-15vxund {
-                    background-color: rgba(0, 0, 0, 0.65) !important;
-                    backdrop-filter: blur(8px) !important;
-                    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-                }
-                .feed-tabs.svelte-1thmq55, .profile-tabs.svelte-1r4i2gu {
-                    background: transparent !important;
-                    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-                }
             `;
         };
 
@@ -58,7 +44,7 @@
                     localStorage.setItem(STORAGE_KEY, data);
                     applyWallpaper(data);
                 } catch (err) {
-                    alert('Файл слишком большой');
+                    alert('Файл слишком большой для памяти браузера');
                 }
             };
             reader.readAsDataURL(file);
@@ -77,7 +63,9 @@
                     </svg>
                     <span>Обои</span>
                 `;
-                btn.onclick = () => fileInput.click();
+                btn.onclick = () => {
+                    fileInput.click();
+                };
 
                 const exitBtn = menu.querySelector('.danger');
                 if (exitBtn) menu.insertBefore(btn, exitBtn);
