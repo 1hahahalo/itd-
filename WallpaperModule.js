@@ -19,8 +19,21 @@
                     background-repeat: no-repeat !important;
                     background-position: center !important;
                 }
-                .layout.svelte-13vg9xt, .main-container.svelte-13vg9xt {
+                .layout, .main-container, .feed-card, .profile-card, 
+                .post-container, .wall-post-form, .suggestions, 
+                .top-clans, .post, .sidebar-menu {
+                    background-color: rgba(15, 15, 15, 0.65) !important;
+                    backdrop-filter: blur(12px);
+                    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+                }
+                .feed-tabs, .post-header, .post-actions, 
+                .suggestions__header, .top-clans__header,
+                .post-content-wrapper, .original-post {
                     background: transparent !important;
+                    border: none !important;
+                }
+                .sidebar-menu-item:hover, .post-action:hover, .feed-tab.active {
+                    background-color: rgba(255, 255, 255, 0.1) !important;
                 }
             `;
         };
@@ -44,7 +57,7 @@
                     localStorage.setItem(STORAGE_KEY, data);
                     applyWallpaper(data);
                 } catch (err) {
-                    alert('Файл слишком большой для памяти браузера');
+                    alert('Файл слишком большой');
                 }
             };
             reader.readAsDataURL(file);
@@ -63,9 +76,7 @@
                     </svg>
                     <span>Обои</span>
                 `;
-                btn.onclick = () => {
-                    fileInput.click();
-                };
+                btn.onclick = () => fileInput.click();
 
                 const exitBtn = menu.querySelector('.danger');
                 if (exitBtn) menu.insertBefore(btn, exitBtn);
