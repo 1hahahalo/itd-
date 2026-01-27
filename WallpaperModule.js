@@ -21,11 +21,12 @@
         const applyWallpaper = async (data) => {
             if (!data) return;
             const theme = await analyzeBrightness(data);
-            const isDarkWallpaper = theme === 'dark';
+            const isDarkWp = theme === 'dark';
             
-            const uiBg = isDarkWallpaper ? 'rgba(255, 255, 255, 0.15)' : 'rgba(35, 35, 35, 0.65)';
-            const modalBg = isDarkWallpaper ? 'rgba(50, 50, 50, 0.98)' : 'rgba(30, 30, 30, 0.98)';
-            const border = isDarkWallpaper ? 'rgba(255, 255, 255, 0.12)' : 'rgba(255, 255, 255, 0.08)';
+            const uiBg = isDarkWp ? 'rgba(255, 255, 255, 0.12)' : 'rgba(20, 20, 20, 0.75)';
+            const border = isDarkWp ? 'rgba(255, 255, 255, 0.15)' : 'rgba(255, 255, 255, 0.05)';
+            const modalBg = isDarkWp ? 'rgba(40, 40, 40, 0.98)' : 'rgba(25, 25, 25, 0.98)';
+            const accentBg = isDarkWp ? 'rgba(255, 255, 255, 0.25)' : 'rgba(0, 0, 0, 0.5)';
 
             const styleId = 'itd-wallpaper-styles';
             let styleTag = document.getElementById(styleId);
@@ -45,45 +46,46 @@
                     background-color: #111 !important;
                 }
                 #app, .layout, main, .main-container, .profile-posts, .feed-content, 
-                main > div, .create-post__inner, .wall-post-form__inner, .post, .feed-tabs, .profile-tabs {
+                main > div, .create-post__inner, .wall-post-form__inner, .post {
                     background: transparent !important;
                 }
-                .create-post, .wall-post-form, .post-container, .sidebar, 
-                .sidebar-pill, .feed-card, .profile-card, .suggestions, 
-                .top-clans, main > div:first-child {
+                .create-post, .wall-post-form, .post-container, .sidebar-pill, 
+                .feed-card, .profile-card, .suggestions, .top-clans, 
+                main > div[class*="svelte-"] {
                     background-color: ${uiBg} !important;
-                    backdrop-filter: blur(16px) !important;
+                    backdrop-filter: blur(14px) !important;
                     border: 1px solid ${border} !important;
+                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
                     color: #fff !important;
-                    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3) !important;
-                    border-radius: 18px !important;
                 }
-                .post-dropdown, .sidebar-menu {
+                .sidebar-avatar, .sidebar-avatar .avatar--emoji {
+                    background-color: ${accentBg} !important;
+                    border-radius: 12px !important;
+                    border: 1px solid ${border} !important;
+                }
+                .sidebar-menu, .post-dropdown {
                     background-color: ${modalBg} !important;
                     z-index: 999999 !important;
                     border: 1px solid rgba(255, 255, 255, 0.1) !important;
-                    backdrop-filter: blur(20px) !important;
-                    box-shadow: 0 10px 40px rgba(0,0,0,0.6) !important;
+                    backdrop-filter: blur(25px) !important;
+                    box-shadow: 0 12px 40px rgba(0,0,0,0.7) !important;
                 }
-                .sidebar-avatar, .sidebar-avatar .avatar--emoji {
-                    background-color: rgba(255, 255, 255, 0.12) !important;
-                    border-radius: 12px !important;
-                }
-                .post-author, .post-content, .profile-bio__name, .post-time, .profile-bio__username {
+                .post-author, .post-content, .profile-bio__name, .post-time, .profile-bio__username, .feed-tab {
                     color: #fff !important;
                 }
                 .sidebar-pill {
-                    padding: 6px !important;
-                    margin-bottom: 14px !important;
+                    padding: 8px !important;
+                    margin-bottom: 15px !important;
+                    border-radius: 24px !important;
                 }
                 .sidebar-nav-item.active {
                     background: rgba(255, 255, 255, 0.15) !important;
-                    border-radius: 12px !important;
+                    border-radius: 16px !important;
                 }
                 .feed-tabs, .profile-tabs {
-                    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+                    border-bottom: 1px solid ${border} !important;
+                    background: transparent !important;
                 }
-                .post-container { margin-bottom: 16px !important; }
             `;
         };
 
@@ -105,7 +107,7 @@
                 try {
                     localStorage.setItem(STORAGE_KEY, data);
                     applyWallpaper(data);
-                } catch (err) { alert('Изображение слишком тяжелое'); }
+                } catch (err) { alert('Изображение слишком большое'); }
             };
             reader.readAsDataURL(file);
         };
