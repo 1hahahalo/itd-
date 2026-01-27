@@ -19,37 +19,43 @@
                     background-repeat: no-repeat !important;
                     background-position: center !important;
                 }
-                #app, .layout, .main-container {
+                
+                /* Убираем заливку со всех фоновых слоев, чтобы видеть обои */
+                #app, .layout, main, .main-container, .profile-posts, main > div {
                     background: transparent !important;
                 }
+
+                /* Стеклянный эффект для основных контейнеров */
                 .feed-card, 
                 .post-container, 
                 .wall-post-form, 
                 .sidebar,
-                .sidebar-menu,
                 .profile-card,
                 .suggestions,
                 .top-clans,
+                .sidebar-menu,
                 .post-dropdown {
                     background-color: rgba(0, 0, 0, 0.6) !important;
                     backdrop-filter: blur(12px) !important;
                     border: 1px solid rgba(255, 255, 255, 0.08) !important;
-                    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
                 }
+
+                /* Исправление для постов в профиле и ленте */
+                .post-container {
+                    margin-bottom: 12px !important;
+                    border-radius: 16px !important;
+                }
+
+                /* Исправление для боковой панели */
                 .sidebar {
                     border-radius: 20px !important;
                 }
-                .wall-post-form {
-                    margin-bottom: 16px !important;
-                    border-radius: 16px !important;
-                }
-                .post-container {
-                    border-radius: 16px !important;
-                    margin-bottom: 12px !important;
-                }
-                .feed-tabs, .profile-tabs {
+
+                /* Делаем вкладки и шапки прозрачными */
+                .feed-tabs, .profile-tabs, .profile-info, .top-clans__header {
                     background: transparent !important;
-                    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
                 }
             `;
         };
