@@ -12,6 +12,7 @@
                 document.head.appendChild(styleTag);
             }
             styleTag.innerHTML = `
+                /* Основной фон */
                 body {
                     background-image: url('${data}') !important;
                     background-size: cover !important;
@@ -19,8 +20,68 @@
                     background-repeat: no-repeat !important;
                     background-position: center !important;
                 }
+
+                /* Прозрачность основных контейнеров */
                 .layout.svelte-13vg9xt, .main-container.svelte-13vg9xt {
                     background: transparent !important;
+                }
+
+                /* Стеклянный интерфейс (Черный полупрозрачный) */
+                .sidebar-pill, 
+                .profile-card, 
+                .feed-card, 
+                .create-post, 
+                .wall-post-form, 
+                .post-container,
+                .sidebar-avatar-wrapper button {
+                    background: rgba(0, 0, 0, 0.5) !important;
+                    backdrop-filter: blur(12px) !important;
+                    -webkit-backdrop-filter: blur(12px) !important;
+                    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+                    color: #ffffff !important;
+                }
+
+                /* Цвет текста и элементов управления */
+                .profile-bio__name, .profile-bio__username, .profile-stats__label, .profile-stats__value,
+                .post-author, .post-content, .post-time, .post-action, .post-views,
+                .feed-tab, .profile-tab, .top-clans__title, .clan-item__count,
+                .create-post__textarea, .wall-post-form__textarea {
+                    color: #ffffff !important;
+                }
+
+                /* Поля ввода */
+                .create-post__textarea, .wall-post-form__textarea {
+                    background: rgba(255, 255, 255, 0.05) !important;
+                }
+
+                .create-post__textarea::placeholder, .wall-post-form__textarea::placeholder {
+                    color: rgba(255, 255, 255, 0.5) !important;
+                }
+
+                /* Иконки (SVG) — делаем белыми */
+                .sidebar-nav-item svg, 
+                .post-action svg, 
+                .post-views svg,
+                .profile-banner__btn svg,
+                .create-post__attach-btn svg,
+                .wall-post-form__attach-btn svg {
+                    color: #ffffff !important;
+                    stroke: #ffffff !important;
+                }
+
+                /* Исключение для залитых иконок */
+                .post-action path[fill="currentColor"] {
+                    fill: #ffffff !important;
+                }
+
+                /* Убираем стандартные фоны вложенных элементов */
+                .profile-info, .profile-tabs, .feed-tabs, .post, .post-header {
+                    background: transparent !important;
+                }
+
+                /* Активные табы */
+                .feed-tab.active, .profile-tab.active {
+                    border-bottom-color: #ffffff !important;
                 }
             `;
         };
