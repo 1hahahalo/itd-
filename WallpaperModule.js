@@ -18,25 +18,38 @@
                     background-attachment: fixed !important;
                     background-repeat: no-repeat !important;
                     background-position: center !important;
-                    background-color: #000 !important;
                 }
-                #app, .layout, .main-container, .page-container {
+                #app, .layout, .main-container {
                     background: transparent !important;
                 }
                 .feed-card, 
+                .post-container, 
+                .wall-post-form, 
+                .sidebar,
+                .sidebar-menu,
                 .profile-card,
-                .post-container,
-                .wall-post-form,
                 .suggestions,
                 .top-clans,
-                .sidebar-menu,
                 .post-dropdown {
-                    background-color: rgba(15, 15, 15, 0.75) !important;
+                    background-color: rgba(0, 0, 0, 0.6) !important;
                     backdrop-filter: blur(12px) !important;
                     border: 1px solid rgba(255, 255, 255, 0.08) !important;
+                    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
                 }
-                .sidebar-avatar, .post-menu-btn {
-                    background: rgba(255, 255, 255, 0.05) !important;
+                .sidebar {
+                    border-radius: 20px !important;
+                }
+                .wall-post-form {
+                    margin-bottom: 16px !important;
+                    border-radius: 16px !important;
+                }
+                .post-container {
+                    border-radius: 16px !important;
+                    margin-bottom: 12px !important;
+                }
+                .feed-tabs, .profile-tabs {
+                    background: transparent !important;
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
                 }
             `;
         };
