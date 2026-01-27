@@ -2,8 +2,25 @@
     window.initWallpaperModule = function() {
         const STORAGE_KEY = 'itd_custom_wallpaper';
 
-        const applyWallpaper = (data) => {
+        const getAverageColor = (src) => {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = 1;
+                    canvas.height = 1;
+                    ctx.drawImage(img, 0, 0, 1, 1);
+                    const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
+                    resolve(`rgba(${Math.max(0, r - 30)}, ${Math.max(0, g - 30)}, ${Math.max(0, b - 30)}, 0.65)`);
+                };
+                img.src = src;
+            });
+        };
+
+        const applyWallpaper = async (data) => {
             if (!data) return;
+            const uiColor = await getAverageColor(data);
             const styleId = 'itd-wallpaper-styles';
             let styleTag = document.getElementById(styleId);
             if (!styleTag) {
@@ -19,11 +36,9 @@
                     background-repeat: no-repeat !important;
                     background-position: center !important;
                 }
-                
-                #app, .layout, main, .main-container, .profile-posts, .feed-content {
+                #app, .layout, main, .main-container, .profile-posts, .feed-content, main > div, .create-post__inner, .wall-post-form__inner {
                     background: transparent !important;
                 }
-
                 .create-post,
                 .wall-post-form,
                 .post-container, 
@@ -36,28 +51,24 @@
                 .top-clans,
                 .post-dropdown,
                 main > div:first-child {
-                    background-color: rgba(0, 0, 0, 0.6) !important;
+                    background-color: ${uiColor} !important;
                     backdrop-filter: blur(12px) !important;
                     border: 1px solid rgba(255, 255, 255, 0.1) !important;
                     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4) !important;
                 }
-
                 .create-post, .wall-post-form, .post-container {
                     border-radius: 16px !important;
                     margin-bottom: 16px !important;
                 }
-
                 .sidebar-pill {
                     border-radius: 9999px !important;
                     padding: 8px !important;
                     margin-bottom: 12px !important;
                 }
-
                 .feed-tabs, .profile-tabs, .top-clans__header {
                     background: transparent !important;
                     border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
                 }
-
                 .sidebar-nav-item.active {
                     background: rgba(255, 255, 255, 0.1) !important;
                 }
@@ -103,7 +114,6 @@
                     <span>Обои</span>
                 `;
                 btn.onclick = () => fileInput.click();
-
                 const exitBtn = menu.querySelector('.danger');
                 if (exitBtn) menu.insertBefore(btn, exitBtn);
                 else menu.appendChild(btn);
