@@ -1,158 +1,126 @@
+// ==UserScript==
+// @name         ITD: Custom Wallpaper (Обои)
+// @namespace    ITD
+// @version      1.0
+// @description  Добавляет возможность установить свой фон на сайте
+// @author       You
+// @match        https://*.xn--d1ah4a.com/*
+// @grant        none
+// @run-at       document-end
+// ==/UserScript==
+
 (function() {
-    window.initWallpaperModule = function() {
-        const STORAGE_KEY = 'itd_custom_wallpaper';
+    'use strict';
 
-        const analyzeBrightness = (src) => {
-            return new Promise((resolve) => {
-                const img = new Image();
-                img.onload = () => {
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
-                    canvas.width = 1; canvas.height = 1;
-                    ctx.drawImage(img, 0, 0, 1, 1);
-                    const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
-                    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-                    resolve(brightness > 125 ? 'light' : 'dark');
-                };
-                img.src = src;
-            });
-        };
+    const STORAGE_KEY = 'itd_user_wallpaper_data';
+    const MENU_SELECTOR = '.sidebar-menu.svelte-13vg9xt';
+    const ITEM_CLASS = 'sidebar-menu-item svelte-13vg9xt';
 
-        const applyWallpaper = async (data) => {
-            if (!data) return;
-            const theme = await analyzeBrightness(data);
-            const isDarkWp = theme === 'dark';
-            
-            const brandColor = '#40ff6b';
-            const uiBg = isDarkWp ? 'rgba(255, 255, 255, 0.1)' : 'rgba(25, 25, 25, 0.7)';
-            const border = 'rgba(255, 255, 255, 0.12)';
-            const modalBg = 'rgba(20, 20, 20, 0.98)';
-
-            const styleId = 'itd-wallpaper-styles';
-            let styleTag = document.getElementById(styleId);
-            if (!styleTag) {
-                styleTag = document.createElement('style');
-                styleTag.id = styleId;
-                document.head.appendChild(styleTag);
-            }
-
-            styleTag.innerHTML = `
-                body {
-                    background-image: url('${data}') !important;
-                    background-size: cover !important;
-                    background-attachment: fixed !important;
-                    background-repeat: no-repeat !important;
-                    background-position: center !important;
-                    background-color: #000 !important;
-                }
-                
-                #app, .layout, main, .main-container, .profile-posts, .feed-content, 
-                main > div, .create-post__inner, .wall-post-form__inner, .post {
-                    background: transparent !important;
-                }
-
-                /* Основные контейнеры */
-                .create-post, .wall-post-form, .post-container, .sidebar, 
-                .sidebar-pill, .feed-card, .profile-card, .suggestions, 
-                .top-clans, main > div[class*="svelte-"] {
-                    background-color: ${uiBg} !important;
-                    backdrop-filter: blur(6px) !important;
-                    border: 1px solid ${border} !important;
-                    border-radius: 24px !important;
-                    color: #fff !important;
-                }
-
-                /* Отступ между формой и постами */
-                .create-post, .wall-post-form {
-                    margin-bottom: 30px !important;
-                }
-
-                /* Элементы управления (Белые) */
-                svg, .post-menu-btn, .suggestions__arrow, .profile-edit-btn, 
-                .create-post__attach-btn, .wall-post-form__attach-btn {
-                    color: #fff !important;
-                    stroke: #fff !important;
-                }
-
-                /* Замена брендового цвета #1d9bf0 на #40ff6b */
-                .create-post__submit, .wall-post-form__submit, 
-                .sidebar-nav-item.active, .feed-tab.active, .profile-tab.active {
-                    background-color: ${brandColor} !important;
-                    color: #000 !important;
-                }
-
-                .feed-tab.active, .profile-tab.active {
-                    border-bottom-color: ${brandColor} !important;
-                    background: transparent !important;
-                    color: ${brandColor} !important;
-                }
-
-                .post-actions .post-action.liked svg {
-                    fill: ${brandColor} !important;
-                    color: ${brandColor} !important;
-                }
-
-                /* Боковое меню и навигация */
-                .sidebar, .sidebar-pill {
-                    border-radius: 30px !important;
-                    padding: 10px !important;
-                }
-
-                .sidebar-avatar, .sidebar-avatar .avatar--emoji {
-                    background-color: rgba(255, 255, 255, 0.2) !important;
-                    border-radius: 20px !important;
-                }
-
-                .post-dropdown, .sidebar-menu {
-                    background-color: ${modalBg} !important;
-                    border-radius: 20px !important;
-                    z-index: 999999 !important;
-                    backdrop-filter: blur(20px) !important;
-                }
-
-                .sidebar-nav-item {
-                    border-radius: 20px !important;
-                    margin: 4px 0 !important;
-                }
-            `;
-        };
-
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) applyWallpaper(saved);
-
-        const fileInput = document.createElement('input');
-        fileInput.type = 'file';
-        fileInput.accept = 'image/*';
-        fileInput.style.display = 'none';
-        document.body.appendChild(fileInput);
-
-        fileInput.onchange = (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = (ev) => {
-                const data = ev.target.result;
-                try {
-                    localStorage.setItem(STORAGE_KEY, data);
-                    applyWallpaper(data);
-                } catch (err) { alert('Изображение слишком большое'); }
-            };
-            reader.readAsDataURL(file);
-        };
-
-        const inject = () => {
-            const menu = document.querySelector('.sidebar-menu.svelte-13vg9xt');
-            if (menu && !menu.querySelector('.itd-wp-action')) {
-                const btn = document.createElement('button');
-                btn.className = 'sidebar-menu-item svelte-13vg9xt itd-wp-action';
-                btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Обои</span>`;
-                btn.onclick = () => fileInput.click();
-                const exitBtn = menu.querySelector('.danger');
-                if (exitBtn) menu.insertBefore(btn, exitBtn);
-                else menu.appendChild(btn);
-            }
-        };
-
-        new MutationObserver(inject).observe(document.body, { childList: true, subtree: true });
+    // --- 1. Функция применения обоев ---
+    const applyWallpaper = (imageData) => {
+        if (!imageData) {
+            document.body.style.backgroundImage = '';
+            return;
+        }
+        // Применяем стили к body. !important нужен, чтобы перебить стандартные стили сайта.
+        document.body.setAttribute('style', `
+            background-image: url('${imageData}') !important;
+            background-size: cover !important;
+            background-repeat: no-repeat !important;
+            background-position: center center !important;
+            background-attachment: fixed !important;
+        `);
     };
+
+    // Загружаем сохраненные обои при старте
+    const savedWp = localStorage.getItem(STORAGE_KEY);
+    if (savedWp) applyWallpaper(savedWp);
+
+
+    // --- 2. Создание скрытого инпута для выбора файла ---
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/png, image/jpeg, image/gif, image/webp';
+    fileInput.style.display = 'none';
+    document.body.appendChild(fileInput);
+
+    // Обработка выбора файла
+    fileInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        // Ограничение на размер файла (например, 8 МБ), чтобы не забивать localStorage
+        if (file.size > 8 * 1024 * 1024) {
+             alert('Файл слишком большой. Пожалуйста, выберите изображение меньше 8 МБ.');
+             return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const imageData = event.target.result;
+            // Сохраняем в память браузера
+            try {
+                localStorage.setItem(STORAGE_KEY, imageData);
+                // Применяем немедленно
+                applyWallpaper(imageData);
+            } catch (err) {
+                alert('Ошибка сохранения. Возможно, изображение слишком большое для локального хранилища.');
+                console.error(err);
+            }
+        };
+        reader.readAsDataURL(file);
+    });
+
+
+    // --- 3. Функция создания и добавления кнопки в меню ---
+    const injectMenuButton = (menu) => {
+        // Проверяем, не добавили ли мы кнопку ранее
+        if (menu.querySelector('.itd-wp-btn')) return;
+
+        const wpBtn = document.createElement('button');
+        wpBtn.className = `${ITEM_CLASS} itd-wp-btn`;
+        // Иконка "изображения" и текст
+        wpBtn.innerHTML = `
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+            <span>Обои</span>
+        `;
+
+        wpBtn.onclick = () => {
+            // Триггерим скрытый инпут файла
+            fileInput.click();
+            // Опционально: закрыть меню после клика (эмуляция клика вне меню)
+            document.body.click();
+        };
+
+        // Вставляем кнопку перед кнопкой "Выйти" (которая имеет класс danger)
+        const exitBtn = menu.querySelector('.danger');
+        if (exitBtn) {
+            menu.insertBefore(wpBtn, exitBtn);
+        } else {
+            menu.appendChild(wpBtn);
+        }
+    };
+
+
+    // --- 4. Наблюдатель за появлением меню в DOM ---
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+             // Если что-то добавилось в DOM
+            if (mutation.addedNodes.length) {
+                // Ищем наше меню по селектору из задачи
+                const menu = document.querySelector(MENU_SELECTOR);
+                if (menu) {
+                    injectMenuButton(menu);
+                }
+            }
+        });
+    });
+
+    // Запускаем наблюдение за телом документа
+    observer.observe(document.body, { childList: true, subtree: true });
+
 })();
