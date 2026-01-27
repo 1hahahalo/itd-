@@ -23,10 +23,10 @@
             const theme = await analyzeBrightness(data);
             const isDarkWp = theme === 'dark';
             
-            const uiBg = isDarkWp ? 'rgba(255, 255, 255, 0.12)' : 'rgba(20, 20, 20, 0.75)';
-            const border = isDarkWp ? 'rgba(255, 255, 255, 0.15)' : 'rgba(255, 255, 255, 0.05)';
-            const modalBg = isDarkWp ? 'rgba(40, 40, 40, 0.98)' : 'rgba(25, 25, 25, 0.98)';
-            const accentBg = isDarkWp ? 'rgba(255, 255, 255, 0.25)' : 'rgba(0, 0, 0, 0.5)';
+            const brandColor = '#40ff6b';
+            const uiBg = isDarkWp ? 'rgba(255, 255, 255, 0.1)' : 'rgba(25, 25, 25, 0.7)';
+            const border = 'rgba(255, 255, 255, 0.12)';
+            const modalBg = 'rgba(20, 20, 20, 0.98)';
 
             const styleId = 'itd-wallpaper-styles';
             let styleTag = document.getElementById(styleId);
@@ -43,48 +43,76 @@
                     background-attachment: fixed !important;
                     background-repeat: no-repeat !important;
                     background-position: center !important;
-                    background-color: #111 !important;
+                    background-color: #000 !important;
                 }
+                
                 #app, .layout, main, .main-container, .profile-posts, .feed-content, 
                 main > div, .create-post__inner, .wall-post-form__inner, .post {
                     background: transparent !important;
                 }
-                .create-post, .wall-post-form, .post-container, .sidebar-pill, 
-                .feed-card, .profile-card, .suggestions, .top-clans, 
-                main > div[class*="svelte-"] {
+
+                /* Основные контейнеры */
+                .create-post, .wall-post-form, .post-container, .sidebar, 
+                .sidebar-pill, .feed-card, .profile-card, .suggestions, 
+                .top-clans, main > div[class*="svelte-"] {
                     background-color: ${uiBg} !important;
-                    backdrop-filter: blur(14px) !important;
+                    backdrop-filter: blur(6px) !important;
                     border: 1px solid ${border} !important;
-                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
-                    color: #fff !important;
-                }
-                .sidebar-avatar, .sidebar-avatar .avatar--emoji {
-                    background-color: ${accentBg} !important;
-                    border-radius: 12px !important;
-                    border: 1px solid ${border} !important;
-                }
-                .sidebar-menu, .post-dropdown {
-                    background-color: ${modalBg} !important;
-                    z-index: 999999 !important;
-                    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-                    backdrop-filter: blur(25px) !important;
-                    box-shadow: 0 12px 40px rgba(0,0,0,0.7) !important;
-                }
-                .post-author, .post-content, .profile-bio__name, .post-time, .profile-bio__username, .feed-tab {
-                    color: #fff !important;
-                }
-                .sidebar-pill {
-                    padding: 8px !important;
-                    margin-bottom: 15px !important;
                     border-radius: 24px !important;
+                    color: #fff !important;
                 }
-                .sidebar-nav-item.active {
-                    background: rgba(255, 255, 255, 0.15) !important;
-                    border-radius: 16px !important;
+
+                /* Отступ между формой и постами */
+                .create-post, .wall-post-form {
+                    margin-bottom: 30px !important;
                 }
-                .feed-tabs, .profile-tabs {
-                    border-bottom: 1px solid ${border} !important;
+
+                /* Элементы управления (Белые) */
+                svg, .post-menu-btn, .suggestions__arrow, .profile-edit-btn, 
+                .create-post__attach-btn, .wall-post-form__attach-btn {
+                    color: #fff !important;
+                    stroke: #fff !important;
+                }
+
+                /* Замена брендового цвета #1d9bf0 на #40ff6b */
+                .create-post__submit, .wall-post-form__submit, 
+                .sidebar-nav-item.active, .feed-tab.active, .profile-tab.active {
+                    background-color: ${brandColor} !important;
+                    color: #000 !important;
+                }
+
+                .feed-tab.active, .profile-tab.active {
+                    border-bottom-color: ${brandColor} !important;
                     background: transparent !important;
+                    color: ${brandColor} !important;
+                }
+
+                .post-actions .post-action.liked svg {
+                    fill: ${brandColor} !important;
+                    color: ${brandColor} !important;
+                }
+
+                /* Боковое меню и навигация */
+                .sidebar, .sidebar-pill {
+                    border-radius: 30px !important;
+                    padding: 10px !important;
+                }
+
+                .sidebar-avatar, .sidebar-avatar .avatar--emoji {
+                    background-color: rgba(255, 255, 255, 0.2) !important;
+                    border-radius: 20px !important;
+                }
+
+                .post-dropdown, .sidebar-menu {
+                    background-color: ${modalBg} !important;
+                    border-radius: 20px !important;
+                    z-index: 999999 !important;
+                    backdrop-filter: blur(20px) !important;
+                }
+
+                .sidebar-nav-item {
+                    border-radius: 20px !important;
+                    margin: 4px 0 !important;
                 }
             `;
         };
