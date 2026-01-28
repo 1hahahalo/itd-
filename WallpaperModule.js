@@ -17,6 +17,7 @@
             }
 
             styleTag.innerHTML = `
+                /* Основной фон */
                 body {
                     background-image: url('${data}') !important;
                     background-size: cover !important;
@@ -24,14 +25,26 @@
                     background-repeat: no-repeat !important;
                     background-position: center !important;
                 }
-                .sidebar-avatar-wrapper .avatar, .sidebar-avatar .avatar--emoji { display: none !important; }
+
+                /* Скрыть аватарку и футер в сайдбаре */
+                .sidebar-avatar-wrapper .avatar, 
+                .sidebar-avatar .avatar--emoji,
+                aside footer, 
+                .sidebar-pill footer { 
+                    display: none !important; 
+                }
+
+                /* Голубо-синяя круглая обводка активных пунктов */
                 .sidebar-nav-item.active {
                     background: rgba(0, 149, 255, 0.15) !important;
                     border-radius: 50% !important;
                     box-shadow: 0 0 0 2px #0088ff, 0 0 10px rgba(0, 136, 255, 0.5) !important;
                     color: #00d4ff !important;
                 }
+
+                /* Прозрачность и стеклянный эффект */
                 .layout.svelte-13vg9xt, .main-container.svelte-13vg9xt { background: transparent !important; }
+                
                 .sidebar-pill, .profile-card, .feed-card, .create-post, .wall-post-form, 
                 .post-container, .explore-card, .notifications-card, .sidebar-avatar-wrapper button {
                     background: rgba(0, 0, 0, 0.5) !important;
@@ -40,6 +53,8 @@
                     border: 1px solid rgba(255, 255, 255, 0.1) !important;
                     color: #ffffff !important;
                 }
+
+                /* Цвет текста (все разделы) */
                 .explore-section__title, .explore-hashtag__name, .explore-hashtag__count,
                 .explore-user__name, .explore-user__username, .explore-user__followers,
                 .notifications-header__title, .notification-text, .notification-preview,
@@ -50,6 +65,7 @@
                 .notifications-tab, .top-clans__title, .clan-item__count,
                 .create-post__textarea, .wall-post-form__textarea { color: #ffffff !important; }
                 
+                /* Иконки */
                 .sidebar-nav-item svg, .post-action svg, .post-views svg,
                 .profile-banner__btn svg, .create-post__attach-btn svg,
                 .wall-post-form__attach-btn svg, .explore-search__icon svg {
@@ -58,7 +74,7 @@
                 }
                 .feed-tab.active, .profile-tab.active, .notifications-tab.active { border-bottom: 2px solid #0088ff !important; }
 
-                /* Стили модалки */
+                /* Модальное окно */
                 .itd-modal-overlay {
                     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
                     background: rgba(0,0,0,0.7); display: flex; align-items: center;
@@ -69,7 +85,7 @@
                     backdrop-filter: blur(20px) !important;
                     border: 1px solid rgba(255,255,255,0.1);
                     padding: 24px; border-radius: 20px; width: 300px; text-align: center;
-                    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+                    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
                 }
                 .itd-modal-btn {
                     width: 100%; padding: 12px; margin: 8px 0; border: none;
@@ -77,9 +93,7 @@
                     transition: 0.2s; color: white;
                 }
                 .itd-btn-primary { background: #0088ff; }
-                .itd-btn-primary:hover { background: #0077ee; }
                 .itd-btn-danger { background: rgba(255, 50, 50, 0.2); border: 1px solid rgba(255,50,50,0.3); }
-                .itd-btn-danger:hover { background: rgba(255, 50, 50, 0.4); }
                 .itd-btn-close { background: transparent; font-size: 13px; opacity: 0.6; }
             `;
         };
@@ -112,7 +126,7 @@
             overlay.className = 'itd-modal-overlay';
             overlay.innerHTML = `
                 <div class="itd-modal">
-                    <h3 style="margin-bottom: 20px; color: white;">Настройка обоев</h3>
+                    <h3 style="margin-bottom: 20px; color: white;">Настройка фона</h3>
                     <button class="itd-modal-btn itd-btn-primary" id="itd-set-wp">Выбрать обои</button>
                     <button class="itd-modal-btn itd-btn-danger" id="itd-reset-wp">Сбросить</button>
                     <button class="itd-modal-btn itd-btn-close" id="itd-close-modal">Отмена</button>
