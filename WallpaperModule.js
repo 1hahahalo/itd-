@@ -12,13 +12,22 @@
             .sidebar-avatar-wrapper, .sidebar-avatar, .avatar--emoji.svelte-6nt8hx, 
             aside footer, footer.svelte-13vg9xt, .sidebar-pill footer { display: none !important; }
             
+            .sidebar-nav.svelte-13vg9xt {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+            }
+
             .sidebar-nav-item.itd-nav-wp { 
                 display: flex !important; 
                 align-items: center !important; 
                 justify-content: center !important; 
+                width: 48px !important; 
                 height: 48px !important; 
-                width: 100% !important; 
+                padding: 0 !important;
+                margin: 0 !important;
                 cursor: pointer !important;
+                position: relative !important;
             }
 
             .sidebar-nav-item.active { 
@@ -29,27 +38,30 @@
             }
 
             .post-dropdown, .post-dropdown.svelte-kvcx9g { 
-                background: #1a1a1a !important; 
-                border: 1px solid rgba(255,255,255,0.1) !important; 
-                z-index: 10000 !important; 
-                box-shadow: 0 10px 25px rgba(0,0,0,0.5) !important;
+                background: #121212 !important; 
+                border: 1px solid rgba(255,255,255,0.15) !important; 
+                z-index: 999999 !important; 
+                box-shadow: 0 15px 35px rgba(0,0,0,0.8) !important;
                 opacity: 1 !important;
+                visibility: visible !important;
+                position: absolute !important;
             }
-            .post-dropdown-item { color: #fff !important; }
+            .post-dropdown-item { color: #fff !important; background: transparent !important; }
             .post-dropdown-item:hover { background: rgba(255,255,255,0.1) !important; }
+            .post-dropdown-item.danger { color: #ff4444 !important; }
 
             .itd-modal-overlay { 
                 position: fixed !important; top: 0 !important; left: 0 !important; 
                 width: 100% !important; height: 100% !important; 
-                background: rgba(0,0,0,0.8) !important; display: flex !important; 
+                background: rgba(0,0,0,0.85) !important; display: flex !important; 
                 align-items: center !important; justify-content: center !important; 
-                z-index: 999999 !important; backdrop-filter: blur(4px) !important; 
+                z-index: 1000000 !important; backdrop-filter: blur(6px) !important; 
             }
             .itd-modal { 
-                background: #1a1a1a !important; border: 1px solid rgba(255,255,255,0.1) !important; 
+                background: #181818 !important; border: 1px solid rgba(255,255,255,0.1) !important; 
                 padding: 24px !important; border-radius: 20px !important; 
                 width: 300px !important; text-align: center !important; 
-                box-shadow: 0 20px 40px rgba(0,0,0,0.5) !important; 
+                box-shadow: 0 25px 50px rgba(0,0,0,0.6) !important; 
             }
             .itd-modal-btn { 
                 width: 100% !important; padding: 12px !important; margin: 8px 0 !important; 
@@ -64,17 +76,15 @@
             css += `
                 body { background-image: url("${data}") !important; background-size: cover !important; background-attachment: fixed !important; background-repeat: no-repeat !important; background-position: center !important; }
                 .layout, .main-container, .layout.svelte-13vg9xt, .main-container.svelte-13vg9xt { background: transparent !important; }
-                .sidebar-pill, .profile-card, .feed-card, .create-post, .wall-post-form, .post-container, .explore-card, .notifications-card, .sidebar-avatar-wrapper button { 
-                    background: rgba(0, 0, 0, 0.5) !important; 
-                    backdrop-filter: blur(12px) !important; 
-                    -webkit-backdrop-filter: blur(12px) !important; 
+                .sidebar-pill, .profile-card, .feed-card, .create-post, .wall-post-form, .post-container, .explore-card, .notifications-card { 
+                    background: rgba(0, 0, 0, 0.55) !important; 
+                    backdrop-filter: blur(14px) !important; 
+                    -webkit-backdrop-filter: blur(14px) !important; 
                     border: 1px solid rgba(255, 255, 255, 0.1) !important; 
-                    color: #ffffff !important; 
                 }
                 .explore-section__title, .explore-hashtag__name, .explore-hashtag__count, .explore-user__name, .explore-user__username, .explore-user__followers, .notifications-header__title, .notification-text, .notification-preview, .notification-time, .notification-author, .notification-action, .explore-search__input, .profile-bio__name, .profile-bio__username, .profile-stats__label, .profile-stats__value, .post-author, .post-content, .post-time, .post-action, .post-views, .feed-tab, .profile-tab, .notifications-tab, .top-clans__title, .clan-item__count, .create-post__textarea, .wall-post-form__textarea { color: #ffffff !important; }
                 .sidebar-nav-item svg, .post-action svg, .post-views svg, .profile-banner__btn svg, .create-post__attach-btn svg, .wall-post-form__attach-btn svg, .explore-search__icon svg { color: #ffffff !important; stroke: #ffffff !important; }
                 .feed-tab.active, .profile-tab.active, .notifications-tab.active { border-bottom: 2px solid #0088ff !important; }
-                .itd-modal { background: rgba(20, 20, 20, 0.9) !important; backdrop-filter: blur(20px) !important; }
             `;
         }
         styleTag.innerHTML = css;
@@ -101,10 +111,10 @@
         reader.readAsDataURL(file);
     };
     const inject = () => {
-        const nav = document.querySelector('.sidebar-nav');
+        const nav = document.querySelector('.sidebar-nav.svelte-13vg9xt');
         if (nav && !nav.querySelector('.itd-nav-wp')) {
             const navBtn = document.createElement('a');
-            navBtn.className = 'sidebar-nav-item itd-nav-wp';
+            navBtn.className = 'sidebar-nav-item svelte-13vg9xt itd-nav-wp';
             navBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" width="24" height="24"><path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><circle cx="12" cy="13" r="3" stroke="currentColor" stroke-width="2"></circle></svg>';
             navBtn.onclick = (e) => { e.preventDefault(); e.stopPropagation(); showModal(); };
             nav.appendChild(navBtn);
