@@ -21,13 +21,13 @@
                     background-position: center !important;
                 }
 
-                /* Скрыть аватарку (трамвайчик) в сайдбаре */
+                /* Скрыть аватарку (трамвайчик) в верхнем меню */
                 .sidebar-avatar-wrapper .avatar, 
                 .sidebar-avatar .avatar--emoji {
                     display: none !important;
                 }
 
-                /* Голубо-синяя круглая обводка для активных пунктов */
+                /* Голубо-синяя круглая обводка для активных пунктов меню */
                 .sidebar-nav-item.active {
                     background: rgba(0, 149, 255, 0.15) !important;
                     border-radius: 50% !important;
@@ -40,9 +40,16 @@
                     background: transparent !important;
                 }
 
-                /* Стеклянный интерфейс (Черный полупрозрачный) */
-                .sidebar-pill, .profile-card, .feed-card, .create-post, 
-                .wall-post-form, .post-container, .sidebar-avatar-wrapper button {
+                /* Стеклянный интерфейс (Черный полупрозрачный) для всех карточек */
+                .sidebar-pill, 
+                .profile-card, 
+                .feed-card, 
+                .create-post, 
+                .wall-post-form, 
+                .post-container,
+                .explore-card,
+                .notifications-card,
+                .sidebar-avatar-wrapper button {
                     background: rgba(0, 0, 0, 0.5) !important;
                     backdrop-filter: blur(12px) !important;
                     -webkit-backdrop-filter: blur(12px) !important;
@@ -50,27 +57,59 @@
                     color: #ffffff !important;
                 }
 
-                /* Цвет текста и элементов */
+                /* Цвет текста для Поиска и Уведомлений */
+                .explore-section__title, .explore-hashtag__name, .explore-hashtag__count,
+                .explore-user__name, .explore-user__username, .explore-user__followers,
+                .notifications-header__title, .notification-text, .notification-preview,
+                .notification-time, .notification-author, .notification-action,
+                .explore-search__input {
+                    color: #ffffff !important;
+                }
+
+                /* Специфические элементы поиска и уведомлений */
+                .explore-search, .explore-hashtag, .explore-user, .notification-item {
+                    background: transparent !important;
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+                }
+
+                .explore-search__input {
+                    background: rgba(255, 255, 255, 0.1) !important;
+                    border: none !important;
+                }
+
+                .explore-search__input::placeholder {
+                    color: rgba(255, 255, 255, 0.5) !important;
+                }
+
+                /* Цвет текста и элементов управления (общий) */
                 .profile-bio__name, .profile-bio__username, .profile-stats__label, .profile-stats__value,
                 .post-author, .post-content, .post-time, .post-action, .post-views,
-                .feed-tab, .profile-tab, .top-clans__title, .clan-item__count,
+                .feed-tab, .profile-tab, .notifications-tab, .top-clans__title, .clan-item__count,
                 .create-post__textarea, .wall-post-form__textarea {
                     color: #ffffff !important;
                 }
 
+                /* Иконки */
                 .sidebar-nav-item svg, .post-action svg, .post-views svg,
                 .profile-banner__btn svg, .create-post__attach-btn svg,
-                .wall-post-form__attach-btn svg {
+                .wall-post-form__attach-btn svg, .explore-search__icon svg {
                     color: #ffffff !important;
                     stroke: #ffffff !important;
                 }
 
-                .post-action path[fill="currentColor"] {
+                .post-action path[fill="currentColor"], .notification-badge svg {
                     fill: #ffffff !important;
                 }
 
-                .profile-info, .profile-tabs, .feed-tabs, .post, .post-header {
+                /* Убираем лишние фоны */
+                .profile-info, .profile-tabs, .feed-tabs, .notifications-header, 
+                .explore-header, .post, .post-header {
                     background: transparent !important;
+                }
+
+                /* Активные табы */
+                .feed-tab.active, .profile-tab.active, .notifications-tab.active {
+                    border-bottom: 2px solid #0088ff !important;
                 }
             `;
         };
