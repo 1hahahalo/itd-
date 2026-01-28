@@ -21,19 +21,28 @@
                     background-position: center !important;
                 }
 
+                /* Скрыть аватарку (трамвайчик) в сайдбаре */
+                .sidebar-avatar-wrapper .avatar, 
+                .sidebar-avatar .avatar--emoji {
+                    display: none !important;
+                }
+
+                /* Голубо-синяя круглая обводка для активных пунктов */
+                .sidebar-nav-item.active {
+                    background: rgba(0, 149, 255, 0.15) !important;
+                    border-radius: 50% !important;
+                    box-shadow: 0 0 0 2px #0088ff, 0 0 10px rgba(0, 136, 255, 0.5) !important;
+                    color: #00d4ff !important;
+                }
+
                 /* Прозрачность основных контейнеров */
                 .layout.svelte-13vg9xt, .main-container.svelte-13vg9xt {
                     background: transparent !important;
                 }
 
                 /* Стеклянный интерфейс (Черный полупрозрачный) */
-                .sidebar-pill, 
-                .profile-card, 
-                .feed-card, 
-                .create-post, 
-                .wall-post-form, 
-                .post-container,
-                .sidebar-avatar-wrapper button {
+                .sidebar-pill, .profile-card, .feed-card, .create-post, 
+                .wall-post-form, .post-container, .sidebar-avatar-wrapper button {
                     background: rgba(0, 0, 0, 0.5) !important;
                     backdrop-filter: blur(12px) !important;
                     -webkit-backdrop-filter: blur(12px) !important;
@@ -41,7 +50,7 @@
                     color: #ffffff !important;
                 }
 
-                /* Цвет текста и элементов управления */
+                /* Цвет текста и элементов */
                 .profile-bio__name, .profile-bio__username, .profile-stats__label, .profile-stats__value,
                 .post-author, .post-content, .post-time, .post-action, .post-views,
                 .feed-tab, .profile-tab, .top-clans__title, .clan-item__count,
@@ -49,39 +58,19 @@
                     color: #ffffff !important;
                 }
 
-                /* Поля ввода */
-                .create-post__textarea, .wall-post-form__textarea {
-                    background: rgba(255, 255, 255, 0.05) !important;
-                }
-
-                .create-post__textarea::placeholder, .wall-post-form__textarea::placeholder {
-                    color: rgba(255, 255, 255, 0.5) !important;
-                }
-
-                /* Иконки (SVG) — делаем белыми */
-                .sidebar-nav-item svg, 
-                .post-action svg, 
-                .post-views svg,
-                .profile-banner__btn svg,
-                .create-post__attach-btn svg,
+                .sidebar-nav-item svg, .post-action svg, .post-views svg,
+                .profile-banner__btn svg, .create-post__attach-btn svg,
                 .wall-post-form__attach-btn svg {
                     color: #ffffff !important;
                     stroke: #ffffff !important;
                 }
 
-                /* Исключение для залитых иконок */
                 .post-action path[fill="currentColor"] {
                     fill: #ffffff !important;
                 }
 
-                /* Убираем стандартные фоны вложенных элементов */
                 .profile-info, .profile-tabs, .feed-tabs, .post, .post-header {
                     background: transparent !important;
-                }
-
-                /* Активные табы */
-                .feed-tab.active, .profile-tab.active {
-                    border-bottom-color: #ffffff !important;
                 }
             `;
         };
@@ -124,9 +113,7 @@
                     </svg>
                     <span>Обои</span>
                 `;
-                btn.onclick = () => {
-                    fileInput.click();
-                };
+                btn.onclick = () => fileInput.click();
 
                 const exitBtn = menu.querySelector('.danger');
                 if (exitBtn) menu.insertBefore(btn, exitBtn);
